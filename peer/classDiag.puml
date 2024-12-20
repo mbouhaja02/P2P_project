@@ -1,0 +1,88 @@
+@startuml
+
+class Peer {
+    - serveur: ServeurPair
+    //Methods
+}
+
+class ServeurPair {
+    - maxConnections: int = 5
+    - serverSocket: ServerSocket
+    - files: List<FileWrapper>
+    - fileManager: FileManager
+    - peerId: int
+    - scheduler: ScheduledExecutorService
+    //Methods
+}
+
+abstract class command {
+    - name: String
+    + command(name: String)
+    + getName(): String
+    + abstract isValid(input: String): boolean
+    + abstract execute(input: String, files: List<FileWrapper>, out: PrintWriter): void
+}
+
+class interested {
+    + interested(name: String)
+    //Methods
+}
+
+class getpieces {
+    + getpieces(name: String)
+    //Methods
+}
+
+class FileManager {
+    - SEED_DIR: String
+    + FileManager(DirectoryPath: String)
+    + getSeedFilesList(): String
+}
+
+class FileWrapper {
+    - pieceSize: int
+    - key: String
+    - bufferMap: BufferMap
+    - path: String
+    - file: File
+    //Methods
+}
+
+class BufferMap {
+    - size: int
+    - binarryArray: int[]
+}
+
+class ConversationHandler {
+    - socket: Socket
+    - files: List<FileWrapper>
+    + ConversationHandler(socket: Socket, f: List<FileWrapper>)
+    + run(): void
+}
+
+
+Peer --> ServeurPair : Uses
+FileWrapper --> BufferMap : Uses
+
+ServeurPair --> ConversationHandler : Creates
+
+
+ConversationHandler --> FileWrapper : Uses
+
+
+ServeurPair *--> FileWrapper : Uses
+
+
+ServeurPair *--> FileManager : Uses
+
+
+ServeurPair *-- command : Uses 
+
+
+command <|-- interested : Extends
+command <|-- getpieces : Extends
+
+
+FileManager --> FileWrapper : Manages
+
+@enduml

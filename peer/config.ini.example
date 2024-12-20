@@ -1,0 +1,24 @@
+#Adresse IP du peer
+peer-ip = 0.0.0.0
+
+#Port du peer
+peer-port = 5050
+
+#update
+update-interval = 30
+
+#pieceSize
+pieceSize = 2048
+
+#log path
+peer-log = ./log
+log-level = 
+
+# Paramètres pour l'interface web du peer
+web_interface_port = 8080
+web_interface_enable = true
+
+# Write automatically Peer IP adress and Port upon connection ?
+# Peers connected to ? In the same config file ? maybe using parts ?
+
+#Nbre max de pair auxquels se connecter 
